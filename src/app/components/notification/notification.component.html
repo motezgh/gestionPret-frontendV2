@@ -1,0 +1,13 @@
+<button  class="btn btn-default btn-sm  " ngbDropdown >
+    <a   class="" id="navbar-default_dropdown_1" ngbDropdownToggle>
+    <i class="fa fa-bell"></i>
+    Notifications
+    <span  class="badge badge-dark" >{{notificationsLength}}</span>
+    </a>
+    <div  class="dropdown-menu-center " aria-labelledby="navbar-default_dropdown_1" ngbDropdownMenu>
+    
+    <a *ngFor="let notif of notificationsNotSeen" routerLink="/prets" (change)="seenNotif(notif.id)"  class="dropdown-item"></a>
+    
+    </div>
+</button>
+

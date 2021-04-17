@@ -1,0 +1,279 @@
+<section class="section pb-0 bg-gradient-warning">
+    <div class="container">
+        <div class="row row-grid align-items-center">
+        <div class="col-md-4 order-lg-2 ml-lg-auto">
+            <div class="position-relative pl-md-5">
+            <img src="./assets/img/ill/ill-2.svg" class="img-center img-fluid">
+            </div>
+        </div>
+        <div class="col-lg-8 order-lg-1">
+            <!-- <div class="d-flex px-3">
+            <div>
+                <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
+                <i class="ni ni-building text-primary"></i>
+                </div>
+            </div>
+            <div class="pl-4">
+                <h4 class="display-3 text-white">Modern Interface</h4>
+                <p class="text-white">The Arctic Ocean freezes every winter and much of the sea-ice then thaws every summer, and that process will continue whatever.</p>
+            </div>
+            </div> -->
+            <!-- <div class="card shadow shadow-lg--hover mt-5">
+            <div class="card-body">
+                <div class="d-flex px-3">
+                <div>
+                    <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
+                    <i class="ni ni-satisfied"></i>
+                    </div>
+                </div>
+                <div class="pl-4">
+                    <h5 class="title text-success">Awesome Support</h5>
+                    <p>The Arctic Ocean freezes every winter and much of the sea-ice then thaws every summer, and that process will continue whatever.</p>
+                    <a href="javascript:void(0)" class="text-success">Learn more</a>
+                </div>
+                </div>
+            </div>
+            </div> -->
+            <div class="card shadow shadow-lg--hover mt-5">
+            <div class="card-body">
+                <div class="col-12">
+                    <div class=" row justify-content-center mb-3">
+                        <div class="icon icon-shape bg-gradient-warning rounded-circle text-white">
+                            <i class="fa fa-user-plus"></i>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <h5 class="title text-warning mb-4">Ajouter employé</h5>
+                    </div>
+                
+                    <div class="row justify-content-center">
+                        
+                        <div class="col-12 col-sm-10 col-md-8 ">
+                    
+
+                    
+
+                            <form novalidate [formGroup]="addUserForm"   (ngSubmit)="addUser()">
+                                <div class="form-group" [ngClass]="{'focused':focus1===true}">
+                                <label for="exampleFormControlInput1">Email*</label>
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                    </div>
+                                
+                                <input type="email" formControlName="email" class="form-control"
+                                (focus)="focus1=true" (blur)="focus1=false" id="exampleFormControlInput1" placeholder="name@example.com"
+                                [ngClass]="{ 'is-invalid': addUserForm.get('email').invalid && addUserForm.get('email').touched || (submitted && f.email.errors) }">
+                                <div *ngIf="addUserForm.get('email').invalid && addUserForm.get('email').touched || (submitted && f.email.errors)" class="invalid-feedback">
+                                    <div >Ce champ est obligatoire* et doit être valide</div>
+                                    
+                                </div>
+                                </div>
+                                </div>
+                                <div class="form-group" [ngClass]="{'focused':focus2===true}">
+                                    <label for="exampleFormControlInput2">Nom d'utilisateur*</label>
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                        </div>
+                                    <input type="text" formControlName="username" class="form-control"
+                                    (focus)="focus2=true" (blur)="focus2=false" id="exampleFormControlInput2" 
+                                    [ngClass]="{ 'is-invalid': addUserForm.get('username').invalid && addUserForm.get('username').touched || (submitted && f.username.errors) }">
+                                    <div *ngIf="addUserForm.get('username').invalid && addUserForm.get('username').touched || (submitted && f.username.errors)" class="invalid-feedback">
+                                        <div >Ce champ est obligatoire* et doit être valide</div>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" [ngClass]="{'focused':focus3===true}">
+                                    <label for="exampleFormControlInput3">Mot de passe*</label>
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                        </div>
+                                    <input type="password" formControlName="password" class="form-control"
+                                    (focus)="focus3=true" (blur)="focus3=false" id="exampleFormControlInput3" 
+                                    [ngClass]="{ 'is-invalid': addUserForm.get('password').invalid && addUserForm.get('password').touched || (submitted && f.password.errors) }">
+                                    <div *ngIf="addUserForm.get('password').invalid && addUserForm.get('password').touched || (submitted && f.password.errors)" class="invalid-feedback">
+                                        <div >Ce champ est obligatoire* et doit être valide</div>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                
+                                <div class="form-group" [ngClass]="{'focused':focus4===true}">
+                                    <label for="exampleFormControlInput4">Departement*</label>
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-home"></i></span>
+                                        </div>
+                                    <select class="form-control" id="exampleFormControlSelect7" formControlName="departement"
+                                    (focus)="focus4=true" (blur)="focus4=false"
+                                    [ngClass]="{ 'is-invalid':addUserForm.get('departement').invalid && addUserForm.get('departement').touched || (submitted && f.departement.errors) }">
+                                    <option *ngFor="let departement of keys(departements)" [ngValue]="departement">{{departements[departement]}}</option>
+                                    
+                                    </select>
+                                    <div *ngIf="addUserForm.get('departement').invalid && addUserForm.get('departement').touched || (submitted && f.departement.errors)" class="invalid-feedback">
+                                        <div >Ce champ est obligatoire* et doit être valide</div>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                
+                
+                                <div class="form-group" [ngClass]="{'focused':focus5===true}">
+                                    <label for="exampleFormControlInput4">Fonction*</label>
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-suitcase"></i></span>
+                                        </div>
+                                    <select class="form-control" id="exampleFormControlSelect" formControlName="fonction"
+                                    (focus)="focus5=true" (blur)="focus5=false"
+                                    [ngClass]="{ 'is-invalid': addUserForm.get('fonction').invalid && addUserForm.get('fonction').touched || (submitted && f.fonction.errors) }">
+                                    <option *ngFor="let fonction of keys(fonctions)" [ngValue]="fonction">{{fonctions[fonction]}}</option>
+                                    
+                                    </select>
+                                    <div *ngIf="addUserForm.get('fonction').invalid && addUserForm.get('fonction').touched || (submitted && f.fonction.errors)" class="invalid-feedback">
+                                        <div >Ce champ est obligatoire* et doit être valide</div>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                                
+                
+                                <div class="form-group" [ngClass]="{'focused':focus6===true}">
+                                    <label for="exampleFormControlInput4">Salaire*</label>
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                        </div>
+                                    <input type="text" formControlName="salaire" class="form-control"
+                                    (focus)="focus6=true" (blur)="focus6=false" id="exampleFormControlInput4" 
+                                    [ngClass]="{ 'is-invalid': addUserForm.get('salaire').invalid && addUserForm.get('salaire').touched || (submitted && f.salaire.errors)}">
+                                    <div *ngIf="addUserForm.get('salaire').invalid && addUserForm.get('salaire').touched || (submitted && f.salaire.errors)" class="invalid-feedback">
+                                        <div >Ce champ est obligatoire* et doit être valide</div>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                
+                
+                                <div class="form-group"  [ngClass]="{'focused':focus7===true}">
+                                    <label for="exampleFormControlSelect5">Type du contrat*</label>
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-book"></i></span>
+                                        </div>
+                                    <select class="form-control" id="exampleFormControlSelect5" formControlName="contratType"
+                                    (focus)="focus7=true" (blur)="focus7=false"
+                                    [ngClass]="{ 'is-invalid':addUserForm.get('contratType').invalid && addUserForm.get('contratType').touched || (submitted && f.contratType.errors)}">
+                                    <option *ngFor="let contrat of keys(contrats)" [ngValue]="contrat">{{contrats[contrat]}}</option>
+                                    
+                                    </select>
+                                    <div *ngIf="addUserForm.get('contratType').invalid && addUserForm.get('contratType').touched || (submitted && f.contratType.errors)" class="invalid-feedback">
+                                        <div >Ce champ est obligatoire* et doit être valide</div>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                
+                                <div class="form-group" [ngClass]="{'focused':focus8===true}">
+                                    <div class="input-group">
+                                        <label for="dp" >Date début de contrat*</label>
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="btn btn-warning  input-group-text" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        
+                                    <input class="form-control" placeholder="dd/mm/yyyy" formControlName="debutContrat"
+                                            name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker"
+                                            id="dp" (focus)="focus8=true" (blur)="focus8=false"
+                                            [ngClass]="{ 'is-invalid': addUserForm.get('debutContrat').invalid && addUserForm.get('debutContrat').touched || (submitted && f.debutContrat.errors) }">
+                                            
+                                        
+                                    <div *ngIf="addUserForm.get('debutContrat').invalid && addUserForm.get('debutContrat').touched || (submitted && f.debutContrat.errors)" class="invalid-feedback">
+                                        <div >Ce champ est obligatoire* et doit être valide</div>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            
+                                <div class="form-group" [ngClass]="{'focused':focus8===true}" *ngIf="f.contratType.value!='CDI'">
+                                    <div class="input-group">
+                                        <label for="dp2" >Date fin de contrat*</label>
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-append">
+                                                <span class="btn btn-warning  input-group-text" (click)="i.toggle()" type="button"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                    <input class="form-control " placeholder="dd/mm/yyyy" formControlName="finContrat"
+                                            id="dp2" name="dp" [(ngModel)]="model2" ngbDatepicker #i="ngbDatepicker"
+                                            (focus)="focus9=true" (blur)="focus9=false"
+                                            [ngClass]="{ 'is-invalid': addUserForm.get('finContrat').invalid && addUserForm.get('finContrat').touched || (submitted && f.finContrat.errors) }">
+                                        
+                                    
+                                            <div *ngIf="addUserForm.get('finContrat').invalid && addUserForm.get('finContrat').touched || (submitted && f.finContrat.errors)" class="invalid-feedback">
+                                                <div >Ce champ est obligatoire* et doit être valide</div>
+                                                
+                                            </div>
+                                    </div>
+                                </div>
+                                </div>
+                                
+                                
+                                <br>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary bg-gradient-primary  mb-2 ">Ajouter</button>
+                                </div>
+                                    
+                                
+                                
+                                <!-- <div class="alert alert-danger" role="alert" *ngIf="showErrorMessage">
+                                {{errorMessageAdd}}
+                                </div>
+                                <div class="alert alert-success" role="alert" *ngIf="showSuccessMessage">
+                                    Employe Cree!
+                                </div>
+                                <div class="alert alert-success" role="alert" *ngIf="emailSend">
+                                    Email Envoyer!
+                                </div> -->
+
+                                <ngb-toast *ngIf="showSuccessMessage"
+                                class="bg-success text-default"
+                                [delay]="5000">
+                                Employé Crée!
+                                </ngb-toast>
+                                <ngb-toast *ngIf="showErrorMessage"
+                                class="bg-danger text-default"
+                                [delay]="5000">
+                                {{errorMessageAdd}}
+                                </ngb-toast>
+                                <ngb-toast *ngIf="emailSend"
+                                class="bg-success text-default"
+                                [delay]="5000">
+                                Email Envoyé!
+                                </ngb-toast>
+
+                            </form>
+                            
+                            
+
+                        </div>
+
+                    </div>
+
+                
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- SVG separator -->
+    <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+    </div>
+    </section>

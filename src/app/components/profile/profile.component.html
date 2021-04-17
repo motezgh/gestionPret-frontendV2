@@ -1,0 +1,379 @@
+<main class="profile-page">
+  <section class="section-profile-cover section-shaped my-0">
+    <!-- Circles background -->
+    <div class="shape shape-style-1 shape-primary alpha-4">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <!-- SVG separator -->
+    <!-- <div class="separator separator-bottom separator-skew">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div> -->
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="card card-profile shadow mt--300">
+        <div class="px-4">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image mb-3">
+                <a (click)="openModal(photoModal)" >
+                  <img src="{{this.host+'/photoUser/'+user.id}}" alt="{{user.username}}"
+                  height="180px" width="180px" class="rounded-circle img-fluid profile ">
+                </a>
+              </div>
+
+
+              <ng-template #photoModal let-modal >
+                <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Modifier votre photo de profil</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <input type="file" (change)="onSelectedFile($event)">
+                        <button class="btn btn-success" (click)="uploadPhoto(user.id)">Enregistrer</button>
+                        <button class="btn btn-danger" (click)="onDeletePhoto(user.id)">Supprimer</button>
+                    </p>
+                </div>
+            </ng-template>
+
+
+            </div>
+            <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
+              <div class="card-profile-actions py-4 mt-lg-0">
+                <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info mr-4">Connect</a> -->
+                
+                <app-settings class="card-profile-actions mt-lg-0"></app-settings>
+              </div>
+            </div>
+            <div class="col-lg-4 order-lg-1">
+              <!-- <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading">22</span>
+                  <span class="description">Friends</span>
+                </div>
+                <div>
+                  <span class="heading">10</span>
+                  <span class="description">Photos</span>
+                </div>
+                <div>
+                  <span class="heading">89</span>
+                  <span class="description">Comments</span>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <h3>{{user.prenom|titlecase}} {{user.nom | titlecase}}
+              <!-- <span class="font-weight-light">, 27</span> -->
+            </h3>
+            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{user.adresse|titlecase}}</div>
+            <div class="h6 mt-2"><i class="ni business_briefcase-24 mr-2"></i>Département {{user.departement|titlecase}}</div>
+            <div><i class="ni education_hat mr-2"></i>{{user.fonction|titlecase}}</div>
+            <br>
+          </div>
+          <div class="mt-5 py-5 border-top ">
+            <div class="row justify-content-center">
+              <div class="col-lg-9">
+
+                <ul ngbNav #nav="ngbNav" class="nav nav-pills nav-fill ">
+                  <li ngbNavItem class="nav-item" >
+                    <a ngbNavLink class="bg-gradient-primary text-white ">A propos</a>
+                    <br>
+                    <ng-template ngbNavContent>
+                      <div class="row">
+                        <div class="col-12">
+                            <p><span class="text-primary text-left">Email: </span>{{user.email}}</p>
+                            <p><span class="text-primary">Mobile: </span>{{user.phone}}</p>
+                            <p><span class="text-primary">Date de naissance: </span>{{user.dateNaissance }} </p>
+                            <h3><strong>CONTRAT</strong></h3>
+                            <p>
+                              <span class="text-primary">Type de contrat: </span>{{user.contratType}}
+                            </p>
+                            
+                            <p><span class="text-primary">Salaire: </span>{{user.salaire}} DT</p>
+                            
+                            <p><span class="text-primary">Capacité de remboursement des prêts: </span>{{user.capRemb}} DT par mois</p>
+                            <p>
+                              <span class="text-primary">Date de début: </span>{{user.debutContrat}} 
+                            </p>
+                            <p *ngIf="user.contratType!='CDI'" >
+                              <span class="text-primary">Date de fin: </span>{{user.finContrat}} 
+                            </p>
+                            
+                        </div>
+                        
+                    </div>
+                    </ng-template>
+                  </li>
+                  <li ngbNavItem class="nav-item" >
+                    <a ngbNavLink class="bg-gradient-warning text-white" (click)="openEdit(user)">Modifier mes données</a>
+                    <br>
+                    <ng-template ngbNavContent>
+                      <br>
+                    <form [formGroup]="editUserForm" (ngSubmit)="editUser(user.id)" novalidate>
+                        <div class="form-group row" [ngClass]="{'focused':focus1===true}">
+                            <label class="col-lg-3 col-form-label form-control-label">Nom</label>
+                            <div class="col-lg-9">
+                              <div class="input-group input-group-alternative">
+                                <div class="input-group-append">
+                                  <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="nom" id="nom" 
+                                (focus)="focus1=true" (blur)="focus1=false">
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" [ngClass]="{'focused':focus2===true}">
+                            <label class="col-lg-3 col-form-label form-control-label">Prenom</label>
+                            <div class="col-lg-9">
+                              <div class="input-group input-group-alternative">
+                                <div class="input-group-append">
+                                  <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="prenom" id="prenom" 
+                                (focus)="focus2=true" (blur)="focus2=false">
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" [ngClass]="{'focused':focus3===true}">
+                            <label class="col-lg-3 col-form-label form-control-label">Mobile</label>
+                            <div class="col-lg-9">
+                              <div class="input-group input-group-alternative">
+                                <div class="input-group-append">
+                                  <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="phone" id="phone" 
+                                (focus)="focus3=true" (blur)="focus3=false"
+                                [ngClass]="{ 'is-invalid':  editUserForm.get('phone').invalid && editUserForm.get('phone').touched || ( f.phone.errors) }"  >
+
+                                <div class="col-12" *ngIf="editUserForm.get('phone').invalid && editUserForm.get('phone').touched || ( f.phone.errors)" class="invalid-feedback">
+                                  <div >Ce champ doit être valide</div>
+                                  
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" [ngClass]="{'focused':focus4===true}">
+                            <label class="col-lg-3 col-form-label form-control-label">Address</label>
+                            <div class="col-lg-9">
+                              <div class="input-group input-group-alternative">
+                                <div class="input-group-append">
+                                  <span class="input-group-text"><i class="fa fa-home"></i></span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="adresse" id="adresse"
+                                (focus)="focus4=true" (blur)="focus4=false" >
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" [ngClass]="{'focused':focus5===true}">
+                            <label class="col-lg-3 col-form-label form-control-label">Date de naissance</label>
+                            
+                            <div class="col-md-6 ">
+                              <div class="input-group input-group-alternative">
+                                <div class="input-group-append">
+                                  <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                
+                                <input type="text"  class="form-control"  formControlName="dateNaissance" placeholder="jj/mm/yyyy"
+                                (focus)="focus5=true" (blur)="focus5=false"  
+                                id="dateNaissance" [ngClass]="{ 'is-invalid': editUserForm.get('dateNaissance').invalid && editUserForm.get('dateNaissance').touched || (f.dateNaissance.errors) }"  >
+
+                          
+                                <div class="col-12" *ngIf="editUserForm.get('dateNaissance').invalid && editUserForm.get('dateNaissance').touched || ( f.dateNaissance.errors)" class="invalid-feedback">
+                                  <div >Ce champ doit être valide</div>
+                                  
+                              </div>
+                            </div>
+                            
+                            </div>
+                            
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label"></label>
+                            <div class="col-lg-9">
+                                
+                                <button type="submit" class="btn btn-primary mt-4 float-right" >Sauvgarder</button>
+                                
+                            </div>
+                        </div>
+                    </form>
+
+                    </ng-template>
+                  </li>
+                  <li ngbNavItem class="nav-item " >
+                    <a ngbNavLink (click)="getPretNonArchiverOfUser(user.id)" class="bg-gradient-primary text-white">Mes Prêts non archivés</a>
+                    <br>
+                    <ng-template ngbNavContent >
+
+
+
+                      <br>
+                        <div class="container" >
+                            <div class="row justify-content-center" >
+                            <div class="col-lg-12" >
+                                <div class="row row-grid" *ngFor="let pret of prets | slice: (page-1) * 5 : page * 5">
+                                <div class="col-lg-12" *ngIf="pret.etat=='ENCOURS'">
+                                    <div class="card card-lift--hover shadow border-0"  >
+                                    <div class="card-body " >
+                                        
+                                        <h6 class=" text-uppercase">En cours</h6>
+                                        <div class=" col-sm-10 col-md-8">
+                                        <span class="badge badge-pill badge-warning mr-2 mb-2">Type: {{pret.typePret.nameType|uppercase}}</span>
+                                        <span class="badge badge-pill badge-warning mr-2 mb-2">Créé le {{pret.createdAt }}</span>
+                                        <span class="badge badge-pill badge-warning mr-2 mb-2">Echéance: {{pret.echeance}} DT par mois</span>
+                                        <span class="badge badge-pill badge-warning mr-2 mb-2">montant: {{pret.montant}} DT</span>
+                                        <span class="badge badge-pill badge-warning mr-2 mb-2">durée: {{pret.dureeRemboursement}} mois</span>
+                                        </div>
+
+                                        <div class="row">
+
+                                          <div class="col-12 col-sm-5 col-lg-4">
+                                            <a (click)="openEditPret(content,pret)" class="btn btn-primary btn-round btn-block   text-white bg-gradient-primary  mt-4">Modifier</a>
+                                          </div>
+                                          <div class="col-0 col-sm-2 col-lg-4"></div>
+                                          <div class="col-12 col-sm-5 col-lg-4 ">
+                                            <a (click)="deletePret(pret.id)" class="btn btn-danger   btn-block  text-white bg-gradient-danger float-right mt-4 ">Supprimer</a>
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12" *ngIf="pret.etat=='ACCEPTER'">
+                                    <div class="card card-lift--hover shadow border-0">
+                                    <div class="card-body py-5">
+                                        
+                                        <h6 class="text-success text-uppercase">Accepté</h6>
+                                        <div class=" col-sm-10 col-md-8">
+                                          <span class="badge badge-pill badge-success mr-2 mb-2">Type: {{pret.typePret.nameType|uppercase}}</span>
+                                          <span class="badge badge-pill badge-success mr-2 mb-2">Créé le {{pret.createdAt }}</span>
+                                          <span class="badge badge-pill badge-success mr-2 mb-2">Echéance: {{pret.echeance}} DT par mois</span>
+                                          <span class="badge badge-pill badge-success mr-2 mb-2">montant: {{pret.montant}} DT</span>
+                                          <span class="badge badge-pill badge-success mr-2 mb-2">durée: {{pret.dureeRemboursement}} mois</span>
+                                          </div>
+                                        <br>
+                                        <span class="text-primary">Début de remboursement : </span>
+                                        <strong>{{pret.debutRemb }}</strong>
+                                        <br>
+                                        <span class="text-primary">Fin de remboursement : </span>
+                                        <strong class="text-center">{{pret.finRemb }}</strong>
+                                    </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-12" *ngIf="pret.etat=='REFUSER'">
+                                    <div class="card card-lift--hover shadow border-0">
+                                    <div class="card-body py-5">
+                                        <div class="icon icon-shape icon-shape-warning rounded-circle mb-4">
+                                        <i class="ni ni-planet"></i>
+                                        </div>
+                                        <h6 class="text-warning text-uppercase">Réfusé</h6>
+                                        <div>
+                                        <span class="badge badge-pill badge-warning">marketing</span>
+                                        <span class="badge badge-pill badge-warning">product</span>
+                                        <span class="badge badge-pill badge-warning">launch</span>
+                                        </div>
+                                        <a href="javascript:void(0)" class="btn btn-warning mt-4">Learn more</a>
+                                    </div>
+                                    </div>
+                                </div> -->
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <br>
+                            <div class="col-12 justify-content-center1">
+                                <ngb-pagination  *ngIf="prets?.length>=5"
+                                    size="sm"
+                                    [rotate]="true" 
+                                    [(page)]="page"
+                                    [pageSize]="5"
+                                    [collectionSize]="prets?.length">
+                                </ngb-pagination>
+                            </div>
+
+
+
+
+                            <ng-template #content let-modal >
+                              <div class="modal-header">
+                                <h4 class="modal-title" id="modal-basic-title">Modifier votre prêt</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form novalidate [formGroup]="editPretForm" (ngSubmit)="updatePret(pret.id)" >
+                                  <div class="form-group">
+                                      <label for="exampleInputEmail1">Montant*</label>
+                                      <input type="text" formControlName="montant" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                      [ngClass]="{ 'is-invalid':  g.montant.errors }">
+                                      <div *ngIf=" g.montant.errors" class="invalid-feedback">
+                                          <div *ngIf="g.montant.errors.required">Ce champ est obligatoire*</div>
+                                          
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="exampleInputPassword1">Durée*</label>
+                                      <input type="text" formControlName="duree" class="form-control" id="exampleInputPassword1"
+                                      [ngClass]="{ 'is-invalid':  g.duree.errors }">
+
+                                      
+                                            <div *ngIf="g.duree.errors" class="invalid-feedback">
+                                                <div *ngIf="g.duree.errors.required">Ce champ est obligatoire*</div>
+                                                
+                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Type de prêt*</label>
+                                        <select class="form-control" id="exampleFormControlSelect5" formControlName="typePret"
+                                        [ngClass]="{ 'is-invalid':  g.typePret.errors }">
+                                              <option *ngFor="let typePret of typePretNames" [ngValue]="typePret">{{typePret}}</option>
+                                              
+                                            </select>
+                                            
+                                            <div *ngIf=" g.typePret.errors" class="invalid-feedback">
+                                                <div *ngIf="g.typePret.errors.required">Ce champ est obligatoire*</div>
+                                                
+                                            </div>
+                        
+                                      </div>
+                                  <button type="submit" [disabled]="editPretForm.invalid" class="btn btn-primary">Enregistrer</button>
+                                </form>
+                              </div>
+                              
+                            </ng-template>
+                    
+
+
+                            <div class="alert alert-warning" role="alert" *ngIf="prets?.length==0">
+                              Vous n'avez aucun pret non archiver !
+                            </div>
+
+                    </ng-template>
+
+                    
+
+                  </li>
+                </ul>
+                <div [ngbNavOutlet]="nav"></div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

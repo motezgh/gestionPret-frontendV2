@@ -1,0 +1,397 @@
+<main class="profile-page">
+    <section class="section-profile-cover bg-gradient-info  section-shaped my-0">
+      <!-- Circles background -->
+      <div class="shape shape-style-1 shape-default alpha-4">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <!-- SVG separator -->
+      <!-- <div class="separator separator-bottom separator-skew">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div> -->
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="card card-profile shadow mt--300">
+          <div class="px-4">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <a >
+                    <img src="{{this.host+'/photoUser/'+user.id}}" alt="{{user.username}}"
+                    alt="{{user.username}}" height="180px" width="180px" class="rounded-circle ">
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
+                <div class="card-profile-actions py-4 mt-lg-0">
+                  <a (click)="openEditUser(content,user)" class="btn btn-sm btn-default text-white mr-4">modifier</a>
+                  
+                  <a *ngIf="!isResponsable && !roleAddedMessage" (click)="addRoleToUser(user.id)"
+                    class="btn btn-sm btn-danger text-white float-right">ajouter role</a>
+                  
+                </div>
+                <div class="alert alert-success" *ngIf="roleAddedMessage" role="alert">
+                  {{user.username}} {{roleAddedMessage}}
+                </div>
+              </div>
+              <div class="col-lg-4 order-lg-1">
+                <!-- <div class="card-profile-stats d-flex justify-content-center">
+                  <div>
+                    <span class="heading">22</span>
+                    <span class="description">Friends</span>
+                  </div>
+                  <div>
+                    <span class="heading">10</span>
+                    <span class="description">Photos</span>
+                  </div>
+                  <div>
+                    <span class="heading">89</span>
+                    <span class="description">Comments</span>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="text-center mt-5">
+              <h3>{{user.prenom|titlecase}} {{user.nom | titlecase}}
+                <!-- <span class="font-weight-light">, 27</span> -->
+              </h3>
+              <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{user.adresse|titlecase}}</div>
+              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Département {{user.departement|titlecase}}</div>
+              <div><i class="ni education_hat mr-2"></i>{{user.fonction|titlecase}}</div>
+              <br>
+            </div>
+            <div class="mt-5 py-5 border-top ">
+              <div class="row justify-content-center">
+                <div class="col-lg-9">
+  
+                  <ul ngbNav #nav="ngbNav" class="nav nav-pills nav-fill ">
+                    <li ngbNavItem class="nav-item" >
+                      <a ngbNavLink class="bg-gradient-info text-white "> A propos </a>
+                      <br>
+                      <ng-template ngbNavContent>
+                        <div class="row">
+                          <div class="col-12">
+                              <p><span class="text-primary text-left">Email: </span><a class="text-info" href="mailto:{{user.email}}">{{user.email}}</a></p>
+                              <p><span class="text-primary">Mobile: </span>{{user.phone}}</p>
+                              <p><span class="text-primary">Date de naissance: </span>{{user.dateNaissance}} </p>
+                              <h3><strong>CONTRAT</strong></h3>
+                              <p>
+                                <span class="text-primary">Type de contrat: </span>{{user.contratType}}
+                              </p>
+                              
+                              <p><span class="text-primary">Salaire: </span>{{user.salaire}} DT</p>
+                              
+                              <p><span class="text-primary">Capacité de remboursement des prêts: </span>{{user.capRemb}} DT par mois</p>
+                              <p>
+                                <span class="text-primary">Date  début: </span>{{user.debutContrat }} 
+                              </p>
+                              <p *ngIf="user.contratType!='CDI'" >
+                                <span class="text-primary">Date fin: </span>{{user.finContrat}} 
+                              </p>
+                              
+                          </div>
+                          
+                      </div>
+                      </ng-template>
+                    </li>
+                    
+                    <li ngbNavItem class="nav-item " >
+                      <a ngbNavLink (click)="getPretNonArchiverOfUser(user.id)" class="bg-gradient-info text-white">Prêts non archivés</a>
+                      <br>
+                      <ng-template ngbNavContent >
+  
+  
+  
+                        <br>
+                          <div class="container" >
+                              <div class="row justify-content-center" >
+                              <div class="col-lg-12" >
+                                  <div class="row row-grid" *ngFor="let pret of prets | slice: (page-1) * 5 : page * 5">
+                                  <div class="col-lg-12" *ngIf="pret.etat=='ENCOURS'">
+                                      <div class="card card-lift--hover shadow border-0"  >
+                                      <div class="card-body " >
+                                          
+                                          <h6 class=" text-uppercase">En cours</h6>
+                                          <div class=" col-sm-10 col-md-8">
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">Type: {{pret.typePret.nameType|uppercase}}</span>
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">Créé le {{pret.createdAt }}</span>
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">echéance: {{pret.echeance}} DT par mois</span>
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">montant: {{pret.montant}} DT</span>
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">durée: {{pret.dureeRemboursement}} mois</span>
+                                          </div>
+  
+                                          <div class="row">
+  
+                                            <div class="col-12 col-sm-5 col-lg-4">
+                                              <a [routerLink]="['/pretDetails/',pret.id]" class="btn btn-primary btn-round btn-block   text-white bg-gradient-primary  mt-4">Plus de Details</a>
+                                            </div>
+                                            
+  
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12" *ngIf="pret.etat=='ACCEPTER'">
+                                      <div class="card card-lift--hover shadow border-0">
+                                      <div class="card-body py-5">
+                                          
+                                          <h6 class="text-success text-uppercase">Accepté</h6>
+                                          <div class=" col-sm-10 col-md-8">
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">Type: {{pret.typePret.nameType|uppercase}}</span>
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">Créé le {{pret.createdAt }}</span>
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">echéance: {{pret.echeance}} DT par mois</span>
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">montant: {{pret.montant}} DT</span>
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">durée: {{pret.dureeRemboursement}} mois</span>
+                                            </div>
+                                          <br>
+                                          <span class="text-primary">Début de remboursement : </span>
+                                          <strong>       {{pret.debutRemb }}</strong>
+                                          <br>
+                                          <span class="text-primary">Fin de remboursement : </span>
+                                          <strong class="text-center">{{pret.finRemb }}</strong>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+                          <br>
+                              <div class="col-12 justify-content-center1">
+                                  <ngb-pagination  *ngIf="prets?.length>=5"
+                                      size="sm"
+                                      [rotate]="true" 
+                                      [(page)]="page"
+                                      [pageSize]="5"
+                                      [collectionSize]="prets?.length">
+                                  </ngb-pagination>
+                              </div>
+  
+  
+                              <div class="alert alert-warning" role="alert" *ngIf="prets?.length==0">
+                                Aucun prêt non archivé !
+                              </div>
+  
+                      </ng-template>
+  
+                      
+  
+                    </li>
+
+                    <li ngbNavItem class="nav-item " >
+                      <a ngbNavLink (click)="getPretArchiverOfUser(user.id)" class="bg-gradient-default text-white">Prêts archivés</a>
+                      <br>
+                      <ng-template ngbNavContent >
+  
+  
+  
+                        <br>
+                          <div class="container" >
+                              <div class="row justify-content-center" >
+                              <div class="col-lg-12" >
+                                  <div class="row row-grid" *ngFor="let pret of pretsArchiver | slice: (page-1) * 5 : page * 5">
+                                  <div class="col-lg-12" *ngIf="pret.etat=='ENCOURS'">
+                                      <div class="card card-lift--hover shadow border-0"  >
+                                      <div class="card-body " >
+                                          
+                                          <h6 class=" text-uppercase">En cours</h6>
+                                          <p class="description mt-3">Argon is a great free UI package based on Angular that includes the most important components and features.</p>
+                                          <div class=" col-sm-10 col-md-8">
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">Type: {{pret.typePret.nameType|uppercase}}</span>
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">Créé le {{pret.createdAt }}</span>
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">echéance: {{pret.echeance}} DT par mois</span>
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">montant: {{pret.montant}} DT</span>
+                                          <span class="badge badge-pill badge-warning mr-2 mb-2">durée: {{pret.dureeRemboursement}} mois</span>
+                                          </div>
+  
+                                          <div class="row">
+  
+                                            <div class="col-12 col-sm-5 col-lg-4">
+                                              <a [routerLink]="['/pretDetails/',pret.id]" class="btn btn-primary btn-round btn-block   text-white bg-gradient-primary  mt-4">Plus de Details</a>
+                                            </div>
+                                            
+  
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12" *ngIf="pret.etat=='ACCEPTER'">
+                                      <div class="card card-lift--hover shadow border-0">
+                                      <div class="card-body py-5">
+                                          
+                                          <h6 class="text-success text-uppercase">Accepté</h6>
+                                          <div class=" col-sm-10 col-md-8">
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">Type: {{pret.typePret.nameType|uppercase}}</span>
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">Créé le {{pret.createdAt }}</span>
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">echéance: {{pret.echeance}} DT par mois</span>
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">montant: {{pret.montant}} DT</span>
+                                            <span class="badge badge-pill badge-success mr-2 mb-2">durée: {{pret.dureeRemboursement}} mois</span>
+                                            </div>
+                                          <br>
+                                          <span class="text-primary">Début de remboursement : </span>
+                                          <strong>       {{pret.debutRemb }}</strong>
+                                          <br>
+                                          <span class="text-primary">Fin de remboursement : </span>
+                                          <strong class="text-center">{{pret.finRemb }}</strong>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12" *ngIf="pret.etat=='REFUSER'">
+                                      <div class="card card-lift--hover shadow border-0">
+                                      <div class="card-body py-5">
+                                          <div class="icon icon-shape icon-shape-warning rounded-circle mb-4">
+                                          <i class="ni ni-planet"></i>
+                                          </div>
+                                          <h6 class="text-warning text-uppercase">Réfusé</h6>
+                                          <div>
+                                            <span class="badge badge-pill badge-warning mr-2 mb-2">Type: {{pret.typePret.nameType|uppercase}}</span>
+                                            <span class="badge badge-pill badge-warning mr-2 mb-2">Créé le {{pret.createdAt }}</span>
+                                            <span class="badge badge-pill badge-warning mr-2 mb-2">echéance: {{pret.echeance}} DT par mois</span>
+                                            <span class="badge badge-pill badge-warning mr-2 mb-2">montant: {{pret.montant}} DT</span>
+                                            <span class="badge badge-pill badge-warning mr-2 mb-2">durée: {{pret.dureeRemboursement}} mois</span>
+                                          </div>
+                                          <a href="javascript:void(0)" class="btn btn-warning mt-4">Learn more</a>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+                          <br>
+                              <div class="col-12 justify-content-center1">
+                                  <ngb-pagination  *ngIf="pretsArchiver?.length>=5"
+                                      size="sm"
+                                      [rotate]="true" 
+                                      [(page)]="page"
+                                      [pageSize]="5"
+                                      [collectionSize]="pretsArchiver?.length">
+                                  </ngb-pagination>
+                              </div>
+  
+  
+                              <div class="alert alert-warning" role="alert" *ngIf="pretsArchiver?.length==0">
+                                Aucun pret archiver !
+                              </div>
+  
+                      </ng-template>
+
+                  </ul>
+                  <div [ngbNavOutlet]="nav"></div>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <ng-template #content let-modal >
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Modifier l'employé</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form novalidate [formGroup]="editContratForm" (ngSubmit)="editUserContrat(user.id)" >
+            <div class="form-group">
+                <label for="exampleInputEmail1">Département*</label>
+                <!-- <input type="text" formControlName="departement" class="form-control"  
+                [ngClass]="{ 'is-invalid':  g.departement.errors }"> -->
+                <select class="form-control" id="exampleFormControlSelect7" formControlName="departement"
+                [ngClass]="{ 'is-invalid': g.departement.errors }">
+                  <option *ngFor="let departement of keys(departements)" [ngValue]="departement">{{departements[departement]}}</option>
+                  
+                </select>
+                <div *ngIf=" g.departement.errors" class="invalid-feedback">
+                    <div *ngIf="g.departement.errors.required">Ce champ est obligatoire*</div>
+                    
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Fonction*</label>
+                <!-- <input type="text" formControlName="fonction" class="form-control" 
+                [ngClass]="{ 'is-invalid':  g.fonction.errors }"> -->
+                <select class="form-control" id="exampleFormControlSelect7" formControlName="fonction"
+                [ngClass]="{ 'is-invalid': g.fonction.errors }">
+                  <option *ngFor="let fonction of keys(fonctions)" [ngValue]="fonction">{{fonctions[fonction]}}</option>
+                  
+                </select>
+
+                
+                      <div *ngIf="g.fonction.errors" class="invalid-feedback">
+                          <div *ngIf="g.fonction.errors.required">Ce champ est obligatoire*</div>
+                          
+                      </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Salaire*</label>
+                <input type="text" formControlName="salaire" class="form-control" 
+                [ngClass]="{ 'is-invalid':  g.salaire.errors }">
+
+                
+                      <div *ngIf="g.salaire.errors" class="invalid-feedback">
+                          <div *ngIf="g.salaire.errors.required">Ce champ est obligatoire*</div>
+                          
+                      </div>
+              </div>
+              
+              <div class="form-group">
+                  <label for="exampleInputPassword1">type de contrat*</label>
+                  <select class="form-control" id="exampleFormControlSelect5" formControlName="contratType"
+                  [ngClass]="{ 'is-invalid':  g.contratType.errors }">
+                        <option *ngFor="let contratType of keys(contratTypes)" [ngValue]="contratType">{{contratTypes[contratType]}}</option>
+                        
+                      </select>
+                      
+                      <div *ngIf=" g.contratType.errors" class="invalid-feedback">
+                          <div *ngIf="g.contratType.errors.required">Ce champ est obligatoire*</div>
+                          
+                      </div>
+  
+                </div>
+                <div class="form-group">
+                  <label >Date debut du contrat*</label>
+                  <input type="text" formControlName="debutContrat" class="form-control" 
+                  [ngClass]="{ 'is-invalid':  g.debutContrat.errors }">
+
+                  
+                        <div *ngIf="g.debutContrat.errors" class="invalid-feedback">
+                            <div *ngIf="g.debutContrat.errors.required">Ce champ est obligatoire*</div>
+                            
+                        </div>
+                </div>
+                <div class="form-group" *ngIf="g.contratType.value!='CDI'">
+                  <label >Date din du contrat*</label>
+                  <input type="text" formControlName="finContrat" class="form-control" 
+                  [ngClass]="{ 'is-invalid':  g.finContrat.errors }">
+
+                  
+                        <div *ngIf="g.finContrat.errors" class="invalid-feedback">
+                            <div *ngIf="g.finContrat.errors.required">Ce champ est obligatoire*</div>
+                            
+                        </div>
+                </div>
+            <button type="submit" [disabled]="editContratForm.invalid" class="btn btn-primary">Enregistrer</button>
+          </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click') && updatePret(pret.id)">Save</button>
+        </div> -->
+      </ng-template>
+
+
+    </section>
+  </main>
+  

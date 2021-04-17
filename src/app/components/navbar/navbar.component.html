@@ -1,0 +1,177 @@
+<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom headroom--top headroom--pinned">
+  <div class="container">
+    <a class="navbar-brand mr-lg-5" routerLink="/home">
+      <img src="./assets/img/brand/SIGA-blanc.png">
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbar_global" [ngbCollapse]="isCollapsed">
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand">
+            <a [routerLink]="['/home']">
+              <img src="./assets/img/brand/SIGA.png">
+            </a>
+          </div>
+          <div class="col-6 collapse-close">
+            <button type="button" class="navbar-toggler" (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link nav-link-icon" routerLink="/home" routerLinkActive='active' (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+            <i class="fa fa-home"></i>
+            Accueil
+          </a>
+      </li>
+        <li class="nav-item dropdown" *ngIf="isLoggedIn && (isResponsable || isEmploye)">
+          <a class="nav-link no-caret" data-toggle="dropdown" role="button">
+            <i class="ni ni-ui-04 "></i>
+            <span class="nav-link-inner--text">Espace Employé</span>
+          </a>
+          <div class="dropdown-menu-xl dropdown-menu" >
+            <div class="dropdown-menu-inner">
+              <a routerLinkActive="active" [routerLink]="['createPret']" class="media d-flex align-items-center" (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+                <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
+                  <i class="fa fa-plus"></i>
+                </div>
+                <div class="media-body ml-3">
+                  <h6 class="heading text-primary mb-md-1">Créer Un Prêt</h6>
+                </div>
+              </a>
+              <a routerLink="/archivePretsEmploye" routerLinkActive='active' class="media d-flex align-items-center" (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+                <div class="icon icon-shape bg-gradient-gray rounded-circle text-white">
+                  <i class="fa fa-folder"></i>
+                </div>
+                <div class="media-body ml-3">
+                  <h6 class="heading text-primary mb-md-1">Vos Prêts archivés</h6>
+                </div>
+              </a>
+              <!-- <a routerLinkActive="active" [routerLink]="['documentation/alerts']" class="media d-flex align-items-center">
+                <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
+                  <i class="ni ni-ui-04"></i>
+                </div>
+                <div class="media-body ml-3">
+                  <h5 class="heading text-primary mb-md-1">Components</h5>
+                  <p class="description d-none d-md-inline-block mb-0">Browse our 50 beautiful handcrafted components offered in the Free version.</p>
+                </div>
+              </a> -->
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isLoggedIn && isResponsable">
+          <a class="nav-link no-caret" data-toggle="dropdown" role="button">
+            <i class="ni ni-collection "></i>
+            <span class="nav-link-inner--text">Espace RH</span>
+            <span *ngIf="notify!=0" class="badge badge-danger">{{notify}}</span>
+          </a>
+          <div class="dropdown-menu">
+            <a routerLink="/employes" routerLinkActive='active' class="dropdown-item" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" >Gestion des employés</a>
+            <a routerLink="/ajouter-employe" routerLinkActive='active' class="dropdown-item" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">Ajouter un employé</a>
+            <a routerLink="/prets" routerLinkActive='active' class="dropdown-item" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">Gestion des prêts
+            <span *ngIf="notify!=0" class="badge badge-danger">{{notify}}</span>
+            </a>
+            <a routerLink="/archive" routerLinkActive='active' class="dropdown-item" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">Archive des prêts</a>
+            <a routerLink="/pretsAarchiver" routerLinkActive='active' class="dropdown-item" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">Prêts à archiver</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown" *ngIf="isLoggedIn && notificationsLength!=0">
+          <a class="nav-link no-caret" data-toggle="dropdown" role="button">
+            <i class="fa fa-bell"></i>
+            <span class="nav-link-inner--text">Notifications</span>
+            <span *ngIf="notificationsLength!=0" class="badge badge-danger">{{notificationsLength}}</span>
+          </a>
+          <div  class="dropdown-menu">
+            <div *ngFor="let notif of notificationsNotSeen" class="row dropdown-item">
+
+              <a *ngIf="notif.showPret==true" routerLink="/prets"  class="dropdown-item" (click)="seenNotif(notif.id)" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" >
+            <p class="float-left">
+              {{notif.content}}
+            </p>
+            <p class="float-right">
+              {{notif.sentAt |date:"dd/MM/yyyy"}}
+            </p>
+          </a>
+          <a *ngIf="notif.showPret==false" routerLink="/profil"  class="dropdown-item" (click)="seenNotif(notif.id)" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" >
+            <p class="float-left">
+              {{notif.content}}
+            </p>
+            <p class="float-right">
+              {{notif.sentAt |date:"dd/MM/yyyy"}}
+            </p>
+          </a>
+
+            </div>
+            
+          </div>
+        </li>
+
+      </ul>
+     
+      <ul class="navbar-nav align-items-lg-center ml-lg-auto" >
+        <hr>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link nav-link-icon" routerLink="/profil"  data-toggle="tooltip" title="Your profile" (click)="isCollapsed = !isCollapsed">
+            <i class="fa fa-user-circle"></i>
+            <span class="nav-link-inner--text ">{{ username  }} profil</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="nav-link nav-link-icon" href="https://www.facebook.com/creativetim" target="_blank" data-toggle="tooltip" title="Like us on Facebook">
+            <i class="fa fa-facebook-square"></i>
+            <span class="nav-link-inner--text d-lg-none">Facebook</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="nav-link nav-link-icon" href="https://www.instagram.com/creativetimofficial" target="_blank" data-toggle="tooltip" title="Follow us on Instagram">
+            <i class="fa fa-instagram"></i>
+            <span class="nav-link-inner--text d-lg-none">Instagram</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="nav-link nav-link-icon" href="https://twitter.com/creativetim" target="_blank" data-toggle="tooltip" title="Follow us on Twitter">
+            <i class="fa fa-twitter-square"></i>
+            <span class="nav-link-inner--text d-lg-none">Twitter</span>
+          </a>
+        </li>
+        <hr>
+        <li class="nav-item ">
+          <a routerLink="/login" routerLinkActive='active' *ngIf="!isLoggedIn" class="btn btn-neutral btn-icon">
+            <span class="btn-inner--icon">
+              <i class="fa fa-sign-in mr-2"></i>
+            </span>
+            <span class="nav-link-inner--text">Se connecter</span>
+          </a>
+        </li>
+        
+        <li class="nav-item ">
+          <a routerLink="/login" routerLinkActive='active' *ngIf="isLoggedIn" (click)="logout()" class="btn btn-neutral btn-icon " (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+            <span class="btn-inner--icon ">
+              <i class="fa fa-sign-in mr-2"></i>
+            </span>
+            <span class="nav-link-inner--text">Se déconnecter</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,90 @@
+<main>
+    <section class="section section-shaped  section-lg">
+    <div class="shape shape-style-1 bg-gradient-default">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="container pt-lg-md">
+        <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card bg-secondary shadow border-0">
+                <div class="col-12 col-md-auto ">
+                    <img src="./assets/img/brand/SIGA.png"  class="img-fluid" alt="Responsive image" >
+                </div> 
+            <!-- <div class="card-header bg-white pb-5">
+                <div class="text-muted text-center mb-3">
+                <small>Sign in with</small>
+                </div>
+                <div class="btn-wrapper text-center">
+                <a href="javascript:void(0)" class="btn btn-neutral btn-icon">
+                    <span class="btn-inner--icon">
+                    <img src="./assets/img/icons/common/github.svg">
+                    </span>
+                    <span class="btn-inner--text">Github</span>
+                </a>
+                <a href="javascript:void(0)" class="btn btn-neutral btn-icon">
+                    <span class="btn-inner--icon">
+                    <img src="./assets/img/icons/common/google.svg">
+                    </span>
+                    <span class="btn-inner--text">Google</span>
+                </a>
+                </div>
+            </div> -->
+            <div class="card-body px-lg-5 py-lg-5">
+                <!-- <div class="text-center text-muted mb-4">
+                <small>Or sign in with credentials</small>
+                </div> -->
+                <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group mb-3" [ngClass]="{'focused':focus===true}">
+                    <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                    </div>
+                    <input class="form-control" formControlName="username" placeholder="Nom d'utilisateur" type="text" 
+                    (focus)="focus=true" (blur)="focus=false" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                    <div *ngIf=" f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Nom d'utilisateur est obligatoire*</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'focused':focus1===true}">
+                    <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input class="form-control" formControlName="password" placeholder="Mot de passe" type="password" 
+                    (focus)="focus1=true" (blur)="focus1=false" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    <div *ngIf=" f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Mot de passe est obligatoire*</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit"  [disabled]="loading" class="btn btn-primary bg-gradient-primary my-4">Se connecter</button>
+                </div>
+                <div *ngIf="error && !loading" class="alert alert-danger">{{error}}</div>
+                </form>
+                <div class="row justify-content-center">
+                    <div class="spinner-border text-primary  " role="status" *ngIf="loading">
+                    </div>
+                </div>
+                
+            </div>
+            </div>
+            <div class="row mt-3">
+            <div class="col-6">
+                
+                <app-forgot-password></app-forgot-password>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+</main>

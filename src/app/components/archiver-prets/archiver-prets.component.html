@@ -1,0 +1,109 @@
+
+<main>
+    <div class="position-relative">
+    <!-- shape Hero -->
+    <section class="section section-lg bg-gradient-default section-shaped pb-250">
+        <div class="shape shape-style-1 shape-default">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        </div>
+        <div class="container py-lg-md d-flex">
+        <div class="col px-0">
+            <div class="row">
+            <div class="col-lg-6">
+                <br>
+                
+                <div class="btn-wrapper mt-5">
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- SVG separator -->
+        <div class="separator separator-bottom separator-skew">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+        </div>
+    </section>
+    <!-- 1st Hero Variation -->
+    </div>
+    <section class="section section-lg pt-lg-0 mt--200"  >
+        <div class="container" >
+            <div class="row justify-content-center" >
+            <div class="col-lg-12" >
+                <div class="row row-grid" *ngFor="let pret of prets | slice: (page-1) * 5 : page * 5">
+                
+                <div class="col-lg-10" *ngIf="pret.etat=='ACCEPTER'">
+                    <div class="card card-lift--hover shadow border-0">
+                        <div class="card-body py-5" >
+                            <div class="text-center">
+                                
+    
+                                <strong class="text-success text-uppercase mb-4">Accepté</strong>
+                                
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="mb-4 mr-4" >
+                                    <img src="{{this.host+'/photoUser/'+pret.user.id}}" height="50px" width="50px" class="rounded-circle ">
+                                    
+                                </div>
+                                <h6 class="text-black">{{pret.user.prenom|titlecase}} {{pret.user.nom|titlecase}}</h6>
+                                
+                            </div>
+                            <span class="badge badge-pill badge-warning mr-2">{{pret.user.fonction}}</span>
+                            
+                            <br>
+                            <a class="text-info " href="mailto:{{pret.user.email}}">{{pret.user.email}}</a>
+                            
+                            <!-- <p class="description mt-3">
+                                
+                                Argon is a great free UI package based on Angular that includes the most important components and features.
+                            </p> -->
+    
+                            <div class="text-black mt-4">
+                                <p><i class="fa fa-tag pr-1"></i> {{pret.typePret.nameType}}</p>
+                                <p><i class="fa fa-money pr-1"></i>Montant: {{pret.montant}} DT</p>
+                                <p><i class="fa fa-calendar pr-1"></i>Durée: {{pret.dureeRemboursement}} Mois</p>
+                                <p><i class="fa fa-dollar "></i>Echéance: {{pret.echeance}} DT par Mois</p>
+                            </div>
+    
+                            <div>
+                            
+                            <span class="badge badge-pill badge-primary mt-4">créé le {{pret.createdAt}}</span>
+                            <span class="badge badge-pill badge-danger">Début de Remboursement: {{pret.debutRemb}}</span>
+                            <span class="badge badge-pill badge-danger">Fin de Remboursement: {{pret.finRemb}}</span>
+                            </div>
+                            <hr>
+                                <a routerLink="/pretsDetails/{{pret.id}}" class="btn btn-success text-white mt-4">Plus d'info</a>
+                                
+                            <a *ngIf="date>dateFinRemb && !pret.archiver" (click)="archiverPret(pret.id)" class="btn btn-default float-right text-white mt-4">Archiver</a>
+                            <div class="alert alert-success" *ngIf="pret.archiver">
+                                Prêt Archivé!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+            </div>
+        </div>
+        <br>
+            <div class="col-lg-12 justify-content-center1 mr-4">
+                <ngb-pagination  *ngIf="prets?.length>=5"
+                    size="sm" 
+                    [(page)]="page"
+                    [pageSize]="5"
+                    [collectionSize]="prets.length">
+                </ngb-pagination>
+            </div>
+    </section>
+</main>

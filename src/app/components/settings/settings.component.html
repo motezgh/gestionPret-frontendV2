@@ -1,0 +1,93 @@
+<button class="btn btn-warning btn-sm  float-right" ngbDropdown >
+    <a class="text-" id="navbar-default_dropdown_1" ngbDropdownToggle>
+    <i class="ni ni-settings-gear-65"></i>
+    Settings
+    </a>
+    <div class="dropdown-menu-center" aria-labelledby="navbar-default_dropdown_1" ngbDropdownMenu>
+    
+    <a class="dropdown-item" (click)="openModal(usernameModal)">Modifier le nom d'utilisateur</a>
+    
+    <a class="dropdown-item" (click)="openModal(passwordModal)">Modifier le mot de passe</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" (click)="openModal(photoModal)" >Modifier la photo du profil</a>
+    </div>
+</button>
+
+
+
+<ng-template #usernameModal let-modal >
+    <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modifier votre nom d'utilisateur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="usernameForm" (ngSubmit)="updateUsername(user.id)" novalidate>
+            <div class="form-group">
+            <label for="exampleInputEmail1">Nouveau nom d'utilisateur</label>
+            <input type="text" class="form-control" formControlName='username'  aria-describedby="emailHelp">
+            
+            </div>
+            
+            
+            <button type="submit"  class="btn btn-primary">Enregistrer</button>
+            <div class="alert alert-danger" role="alert" *ngIf="showErrorMessageUsername">
+                {{errorMessageUsername}}
+            </div>
+            <div class="alert alert-success" role="alert" *ngIf="showSuccessMessageUsername">
+                Votre nom d'utilisateur a été modifié, vous devez reconnecter!
+            </div>  
+        </form>
+    </div>
+</ng-template>
+
+
+
+<ng-template #passwordModal let-modal >
+    <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modifier votre mot de passe</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="passwordForm" (ngSubmit)="updatePassword(user.id)" novalidate>
+            <div class="form-group">
+            <label for="exampleInputEmail1">Mot de passe actuel</label>
+            <input type="password" class="form-control" formControlName='oldPass' id="exampleInputEmail1" aria-describedby="emailHelp">
+            
+            </div>
+            <div class="form-group">
+            <label for="exampleInputPassword1">Nouveau mot de passe</label>
+            <input type="password" formControlName='newPass' class="form-control" id="exampleInputPassword1">
+            </div>
+            
+            <button type="submit" [disabled]="passwordForm.invalid" class="btn btn-primary">Submit</button>
+            <div class="alert alert-danger" role="alert" *ngIf="showErrorMessagePassword">
+                Erreur! le mot de passe actuel est incorrect !
+            </div>
+            <div class="alert alert-success" role="alert" *ngIf="showSuccessMessagePassword">
+                Votre mot de passe a été modifié !
+            </div> 
+        </form>
+    </div>
+</ng-template>
+
+
+
+<ng-template #photoModal let-modal >
+    <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modifier votre photo de profil</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <p>
+            <input type="file" (change)="onSelectedFile($event)">
+            <button class="btn btn-success" (click)="uploadPhoto(user.id)">Enregistrer</button>
+            <button class="btn btn-danger" (click)="onDeletePhoto(user.id)">Supprimer</button>
+        </p>
+    </div>
+</ng-template>
